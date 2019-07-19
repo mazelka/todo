@@ -32,6 +32,8 @@ gem 'carrierwave', '~> 1.0'
 gem 'carrierwave-dropbox', :git => 'https://github.com/robin850/carrierwave-dropbox.git', :tag => 'v2.0.0.rc1'
 gem 'rmagick'
 gem 'dotenv-rails'
+gem 'rspec-rails-swagger'
+gem "pundit"
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'

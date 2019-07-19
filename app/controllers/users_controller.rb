@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user, only: [:destroy]
+  before_action :authenticate_user, only: [:destroy, :index]
 
   def index
     render json: { status: 200, msg: 'Logged-in' }, adapter: :json_api
@@ -17,9 +17,14 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find(params[:id])
-    if user.destroy
-      render json: { status: 200 }, adapter: :json_api
+    @user = User.find(params[:id])
+    authorize @user
+    if @user.destroy
+      render json: { status: 200, msg: 'Deleted' }, adapter: :json_api
+    else
+      render json: @user, adapter: :json_api,
+             serializer: ErrorSerializer,
+             status: :unprocessable_entity
     end
   end
 
