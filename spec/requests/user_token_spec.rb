@@ -4,7 +4,7 @@ RSpec.describe 'user tokens', type: :request, capture_examples: true do
   let(:user) { create :user }
 
   path '/user_token' do
-    post(summary: 'create user') do
+    post(summary: 'login with email or username') do
       tags 'authorize'
       parameter 'Content-Type', { in: :header, type: :string }
       let(:'Content-Type') { 'application/json' }
@@ -18,6 +18,7 @@ RSpec.describe 'user tokens', type: :request, capture_examples: true do
                 type: :object,
                 properties: {
                   email: { type: :string },
+                  username: { type: :string },
                   password: { type: :string },
                 },
               },
@@ -25,7 +26,7 @@ RSpec.describe 'user tokens', type: :request, capture_examples: true do
           },
         },
       } }
-      response(201, description: 'successful') do
+      response(201, description: 'successful login with email') do
         let(:user) { create(:user) }
         let(:body) do
           { data: {
@@ -36,7 +37,18 @@ RSpec.describe 'user tokens', type: :request, capture_examples: true do
           } }
         end
       end
-      response(404, description: 'not found') do
+      response(201, description: 'successful login with username') do
+        let(:user) { create(:user) }
+        let(:body) do
+          { data: {
+            attributes: {
+              username: user.username,
+              password: user.password,
+            },
+          } }
+        end
+      end
+      response(404, description: 'user not found') do
         let(:user) { create(:user) }
         let(:body) do
           { data: {

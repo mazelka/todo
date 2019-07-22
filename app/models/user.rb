@@ -11,4 +11,9 @@ class User < ApplicationRecord
   def downcase_email
     self.email = email.to_s.downcase
   end
+
+  def self.from_token_request(request)
+    username = request.params[:data][:attributes] && request.params[:data][:attributes][:username] or email = request.params[:data][:attributes] && request.params[:data][:attributes][:email]
+    self.find_by(username: username) or self.find_by(email: email)
+  end
 end
