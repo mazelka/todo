@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Api::V1::UsersController < Api::V1::ApplicationController
   before_action :authenticate_user, only: [:destroy, :index]
 
   def index
@@ -17,15 +17,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
-    authorize @user
-    if @user.destroy
-      render json: { status: 200, msg: 'Deleted' }, adapter: :json_api
-    else
-      render json: @user, adapter: :json_api,
-             serializer: ErrorSerializer,
-             status: :unprocessable_entity
-    end
+    authorize User.find(params[:id])
+    current_user.destroy
+    render json: { status: 200, msg: 'Deleted' }, adapter: :json_api
   end
 
   private
