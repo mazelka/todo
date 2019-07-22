@@ -3,6 +3,5 @@ class Api::V1::UserTokenController < Knock::AuthTokenController
 
   def auth_params
     params.require(:data).require(:attributes).permit(:email, :username, :password)
-    # || params.require(:data).require(:attributes).permit(:password, :username)
   end
 end
