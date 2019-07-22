@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class Api::V1::UsersController < Api::V1::ApplicationController
   before_action :authenticate_user, only: [:destroy, :index]
 
   def index

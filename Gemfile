@@ -42,6 +42,7 @@ group :development, :test do
 gem 'ffaker'
 gem 'database_cleaner'
 gem 'shoulda-matchers'
+gem 'json_matchers'
 gem 'simplecov', require: false
 gem 'rspec-rails'
 gem 'factory_bot_rails'

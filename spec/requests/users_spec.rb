@@ -7,7 +7,7 @@ RSpec.describe 'users', type: :request, capture_examples: true do
     Knock::AuthToken.new(payload: { sub: user.id }).token
   end
 
-  path '/users' do
+  path '/api/v1/users' do
     get(summary: 'list users') do
       tags 'users'
       parameter 'Authorization', { in: :header, type: :string }
@@ -20,22 +20,7 @@ RSpec.describe 'users', type: :request, capture_examples: true do
       parameter 'Content-Type', { in: :header, type: :string }
       let(:'Content-Type') { 'application/json' }
       parameter 'body', { in: :body, required: true, schema: {
-        type: :object,
-        properties: {
-          data: {
-            type: :object,
-            properties: {
-              attributes: {
-                type: :object,
-                properties: {
-                  username: { type: :string },
-                  email: { type: :string },
-                  password: { type: :string },
-                },
-              },
-            },
-          },
-        },
+        '$ref' => '#/user.json',
       } }
       response(200, description: 'successful') do
         let(:user) { build(:user) }
@@ -64,7 +49,7 @@ RSpec.describe 'users', type: :request, capture_examples: true do
     end
   end
 
-  path '/users/{id}' do
+  path '/api/v1/users/{id}' do
     parameter 'id', { in: :path, type: :string }
     parameter 'Authorization', { in: :header, type: :string }
 

@@ -1,4 +1,4 @@
-class UserTokenController < Knock::AuthTokenController
+class Api::V1::UserTokenController < Knock::AuthTokenController
   skip_before_action :verify_authenticity_token
 
   def auth_params
