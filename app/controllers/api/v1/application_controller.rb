@@ -9,7 +9,6 @@ class Api::V1::ApplicationController < ApplicationController
   private
 
   def user_not_authorized
-    render json: { status: 401, msg: 'Unauthorized' }, adapter: :json_api,
-           status: :unauthorized
+    head :forbidden
   end
 end
