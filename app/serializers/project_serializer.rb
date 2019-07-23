@@ -1,3 +1,5 @@
-class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :name
+class ProjectSerializer
+  include FastJsonapi::ObjectSerializer
+  attributes :name
+  belongs_to :user
 end

@@ -7,14 +7,14 @@ class ProjectPolicy
   end
 
   def update?
-    @project.user_id = @user.id
+    @project.user_id == @user.id
   end
 
   def show?
-    @project.user_id = @user.id
+    @project.user_id == @user.id
   end
 
   def destroy?
-    @project.user_id = @user.id
+    @project.user_id == @user.id
   end
 end

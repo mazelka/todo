@@ -14,6 +14,42 @@ RSpec.configure do |config|
         version: 'v1',
         description: 'This is the first version API',
       },
+      definitions: {
+        project: {
+          type: 'object',
+          properties: {
+            data: {
+              type: 'object',
+              properties: {
+                attributes: {
+                  type: 'object',
+                  properties: {
+                    name: { type: 'string' },
+                  },
+                },
+              },
+            },
+          },
+        },
+        user: {
+          type: 'object',
+          properties: {
+            data: {
+              type: 'object',
+              properties: {
+                attributes: {
+                  type: 'object',
+                  properties: {
+                    email: { type: 'string' },
+                    username: { type: 'string' },
+                    password: { type: 'string' },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     },
   }
 end
