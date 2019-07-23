@@ -11,7 +11,7 @@ RSpec.describe 'update project', type: :request, capture_examples: true do
     Knock::AuthToken.new(payload: { sub: user.id }).token
   end
 
-  path '/api/v1/users/{user_id}/projects/{id}' do
+  path '/api/v1/projects/{id}' do
     put(summary: 'update project') do
       tags 'projects'
       parameter 'Content-Type', in: :header, type: :string
@@ -51,22 +51,7 @@ RSpec.describe 'update project', type: :request, capture_examples: true do
           } }
         end
       end
-      response(403, description: 'forbidden') do
-        let(:Authorization) { "Bearer #{token}" }
-        let(:user_id) { not_allowed_user.id }
-        let(:id) { project.id }
-        let(:body) do
-          { data: {
-            attributes: {
-              name: 'updated name'
-            }
-          } }
-        end
-        it 'has error title' do
-          expect(json_errors.first['title']).to eq('Unauthorized')
-        end
-      end
-      response(403, description: 'forbidden') do
+      response(404, description: 'not found') do
         let(:Authorization) { "Bearer #{token}" }
         let(:user_id) { user.id }
         let(:id) { not_allowed_project.id }
@@ -78,7 +63,7 @@ RSpec.describe 'update project', type: :request, capture_examples: true do
           } }
         end
         it 'has error title' do
-          expect(json_errors.first['title']).to eq('Unauthorized')
+          expect(json_errors.first['title']).to eq('Record not Found')
         end
       end
       response(401, description: 'unauthorized') do
@@ -90,6 +75,9 @@ RSpec.describe 'update project', type: :request, capture_examples: true do
               name: 'updated name'
             }
           } }
+        end
+        it 'has error title' do
+          expect(json_errors.first['title']).to eq('Token is invalid')
         end
       end
     end

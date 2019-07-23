@@ -13,7 +13,7 @@ RSpec.describe 'projects', type: :request, capture_examples: true do
   end
 
   context 'get user projects' do
-    path '/api/v1/users/{user_id}/projects/' do
+    path '/api/v1/projects/' do
       get(summary: 'get user projects') do
         tags 'projects'
         parameter 'Content-Type', in: :header, type: :string
@@ -29,12 +29,8 @@ RSpec.describe 'projects', type: :request, capture_examples: true do
         end
         response(401, description: 'unauthorized') do
           let(:user_id) { user.id }
-        end
-        response(403, description: 'forbidden') do
-          let(:Authorization) { "Bearer #{token}" }
-          let(:user_id) { not_allowed_user.id }
           it 'has error title' do
-            expect(json_errors.first['title']).to eq('Unauthorized')
+            expect(json_errors.first['title']).to eq('Token is invalid')
           end
         end
       end

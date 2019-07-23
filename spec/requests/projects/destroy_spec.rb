@@ -11,7 +11,7 @@ RSpec.describe 'projects', type: :request, capture_examples: true do
   end
 
   context 'destroy project' do
-    path '/api/v1/users/{user_id}/projects/{id}' do
+    path '/api/v1/projects/{id}' do
       delete(summary: 'destroy project') do
         tags 'projects'
         parameter 'Content-Type', in: :header, type: :string
@@ -24,19 +24,20 @@ RSpec.describe 'projects', type: :request, capture_examples: true do
           let(:user_id) { user.id }
           let(:id) { project.id }
         end
-        response(403, description: 'forbidden') do
-          let(:Authorization) { "Bearer #{token}" }
-          let(:user_id) { not_allowed_user.id }
-          let(:id) { project.id }
-        end
-        response(403, description: 'forbidden') do
+        response(404, description: 'not found') do
           let(:Authorization) { "Bearer #{token}" }
           let(:user_id) { user.id }
           let(:id) { not_allowed_project.id }
+          it 'has error title' do
+            expect(json_errors.first['title']).to eq('Record not Found')
+          end
         end
         response(401, description: 'unauthorized') do
           let(:user_id) { user.id }
           let(:id) { project.id }
+          it 'has error title' do
+            expect(json_errors.first['title']).to eq('Token is invalid')
+          end
         end
       end
     end

@@ -1,9 +1,7 @@
 class Api::V1::ProjectsController < Api::V1::ApplicationController
-  before_action :authorize_user
   before_action :find_project, only: [:show, :update, :destroy]
 
   def index
-    authorize User.find(params[:user_id]), policy_class: UserPolicy
     @projects = current_user.projects
     render json: ProjectSerializer.new(@projects), adapter: :json_api
   end
@@ -39,12 +37,8 @@ class Api::V1::ProjectsController < Api::V1::ApplicationController
   private
 
   def find_project
-    authorize Project.find(params[:id])
     @project = current_user.projects.find(params[:id])
-  end
-
-  def authorize_user
-    authorize User.find(params[:user_id]), policy_class: UserPolicy
+    authorize @project
   end
 
   def project_params

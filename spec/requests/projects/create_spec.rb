@@ -4,13 +4,12 @@ include JsonResponseHelpers
 RSpec.describe 'projects', type: :request, capture_examples: true do
   let!(:user) { create :user }
   let!(:project) { build :project, user: user }
-  let!(:not_allowed_user) { create :user }
 
   def token
     Knock::AuthToken.new(payload: { sub: user.id }).token
   end
 
-  path '/api/v1/users/{user_id}/projects/' do
+  path '/api/v1/projects/' do
     post(summary: 'create new project') do
       tags 'projects'
       parameter 'Content-Type', in: :header, type: :string
@@ -44,20 +43,6 @@ RSpec.describe 'projects', type: :request, capture_examples: true do
               name: ''
             }
           } }
-        end
-      end
-      response(403, description: 'forbidden') do
-        let(:Authorization) { "Bearer #{token}" }
-        let(:user_id) { not_allowed_user.id }
-        let(:body) do
-          { data: {
-            attributes: {
-              name: 'test'
-            }
-          } }
-        end
-        it 'has error title' do
-          expect(json_errors.first['title']).to eq('Unauthorized')
         end
       end
       response(401, description: 'unauthorized') do

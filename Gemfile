@@ -40,14 +40,14 @@ gem 'fast_jsonapi'
 # gem 'rack-cors'
 
 group :development, :test do
-gem 'ffaker'
-gem 'pry'
-gem 'database_cleaner'
-gem 'shoulda-matchers'
-gem 'json_matchers'
-gem 'simplecov', require: false
-gem 'rspec-rails'
-gem 'factory_bot_rails'
+  gem 'ffaker'
+  gem 'pry'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers'
+  gem 'json_matchers'
+  gem 'simplecov', require: false
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
