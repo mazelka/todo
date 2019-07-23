@@ -12,6 +12,7 @@ require 'rspec/rails'
 require 'support/database_cleaner'
 require 'support/shoulda_matchers'
 require 'json_matchers/rspec'
+require 'pundit/rspec'
 
 JsonMatchers.schema_root = 'spec/support/api/schemas'
 # Add additional requires below this line. Rails is not loaded until this point!

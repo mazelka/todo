@@ -2,7 +2,7 @@ class Api::V1::ProjectsController < Api::V1::ApplicationController
   before_action :find_project, only: [:show, :update, :destroy]
 
   def index
-    @projects = current_user.projects
+    @projects = policy_scope(current_user.projects)
     render json: ProjectSerializer.new(@projects), adapter: :json_api
   end
 

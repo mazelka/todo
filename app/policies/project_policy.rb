@@ -1,4 +1,4 @@
-class ProjectPolicy
+class ProjectPolicy < ApplicationPolicy
   attr_reader :user, :project
 
   def initialize(user, project)
@@ -16,5 +16,11 @@ class ProjectPolicy
 
   def destroy?
     project.user_id == user.id
+  end
+
+  class Scope < Scope
+    def resolve
+      scope.where(user_id: user.id)
+    end
   end
 end
