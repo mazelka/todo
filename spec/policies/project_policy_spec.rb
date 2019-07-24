@@ -8,7 +8,7 @@ describe ProjectPolicy do
   let!(:project) { create(:project, user: user) }
   let!(:not_permitted_project) { create(:project, user: not_permitted_user) }
 
-  permissions :update?, :show?, :destroy? do
+  permissions :update?, :show?, :destroy?, :create?, :index? do
     it 'denies user to interact with project of other user' do
       expect(subject).not_to permit(user, not_permitted_project)
     end
