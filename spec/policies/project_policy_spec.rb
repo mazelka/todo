@@ -13,7 +13,7 @@ describe ProjectPolicy do
       expect(subject).not_to permit(user, not_permitted_project)
     end
 
-    it 'allows user tointeract with his projects' do
+    it 'allows user to interact with his projects' do
       expect(subject).to permit(user, project)
     end
   end

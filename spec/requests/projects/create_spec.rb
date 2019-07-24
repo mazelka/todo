@@ -18,6 +18,7 @@ RSpec.describe 'projects', type: :request, capture_examples: true do
       parameter 'body', in: :body, required: true, schema: { '$ref' => '#/definitions/project' }
       let(:'Content-Type') { 'application/json' }
       response(201, description: 'successful') do
+        start_project_count = Project.count
         let(:Authorization) { "Bearer #{token}" }
         let(:user_id) { user.id }
         let(:body) do
@@ -32,6 +33,9 @@ RSpec.describe 'projects', type: :request, capture_examples: true do
         end
         it 'has valid name' do
           expect(json_attributes['name']).to eq(project.name)
+        end
+        it '1 project created' do
+          expect(Project.count).to eq(start_project_count + 1)
         end
       end
       response(422, description: 'unprocessable entity') do
