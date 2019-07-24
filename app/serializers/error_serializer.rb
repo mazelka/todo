@@ -5,7 +5,7 @@ class ErrorSerializer
 
   def self.user_not_authorized
     {
-      title: 'Unauthorized',
+      title: 'Forbidden',
       status: 403,
       source: { 'pointer' => '/headers/authorization' },
       detail: 'You are not authorized.'
