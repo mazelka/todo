@@ -9,7 +9,7 @@ RSpec.describe 'user tokens', type: :request, capture_examples: true do
       parameter 'Content-Type', { in: :header, type: :string }
       let(:'Content-Type') { 'application/json' }
       parameter 'body', { in: :body, required: true, schema: {
-                  '$ref' => '#/user.json',
+                  '$ref' => '#/definitions/user',
                 } }
       response(201, description: 'successful login with email') do
         let(:user) { create(:user) }
