@@ -6,6 +6,14 @@ class TaskPolicy < ApplicationPolicy
     @task = task
   end
 
+  def index?
+    task.project.user_id == user.id
+  end
+
+  def create?
+    task.project.user_id == user.id
+  end
+
   def update?
     task.project.user == user
   end

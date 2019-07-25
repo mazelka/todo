@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Task, type: :model do
   context 'associations' do
     it { should belong_to(:project) }
+    it { should have_many(:comments) }
   end
   context 'validations' do
     it 'requires project' do

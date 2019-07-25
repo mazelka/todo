@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         resources :tasks do
           put 'move_lower' => 'tasks#move_lower'
           put 'move_higher' => 'tasks#move_higher'
+          resources :comments, only: [:create, :destroy, :index]
         end
       end
       post 'user_token' => 'user_token#create'
