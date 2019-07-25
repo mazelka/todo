@@ -1,6 +1,5 @@
 class Api::V1::TasksController < Api::V1::ApplicationController
-  before_action :find_task, only: [:show, :update, :destroy]
-  before_action :find_task_to_move, only: [:move_lower, :move_higher]
+  before_action :find_task, except: [:index, :create]
   before_action :find_project, only: [:index, :create]
 
   def index
@@ -51,11 +50,6 @@ class Api::V1::TasksController < Api::V1::ApplicationController
   def find_task
     @task = Task.find(params[:id])
     authorize @task
-  end
-
-  def find_task_to_move
-    @task = Task.find(params[:task_id])
-    authorize @task, :update?
   end
 
   def find_project

@@ -4,8 +4,10 @@ Rails.application.routes.draw do
       resources :users, only: [:create, :index, :destroy]
       resources :projects, :shallow => true do
         resources :tasks do
-          put 'move_lower' => 'tasks#move_lower'
-          put 'move_higher' => 'tasks#move_higher'
+          member do
+            put 'move_lower'
+            put 'move_higher'
+          end
         end
       end
       post 'user_token' => 'user_token#create'
