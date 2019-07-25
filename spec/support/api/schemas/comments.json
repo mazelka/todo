@@ -1,0 +1,74 @@
+{
+  "data": [
+    {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "attributes": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "attachment_url": { "type": "string" }
+              }
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "project": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string" },
+                        "type": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "id": { "type": "string" },
+            "attributes": {
+              "type": "object",
+              "properties": {
+                "text": { "type": "string" },
+                "attachment_url": { "type": "string" }
+              }
+            },
+            "relationships": {
+              "type": "object",
+              "properties": {
+                "project": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string" },
+                        "type": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

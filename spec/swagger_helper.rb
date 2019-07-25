@@ -2,6 +2,7 @@ require 'rspec/rails/swagger'
 require 'rails_helper'
 
 RSpec.configure do |config|
+  include ActionDispatch::TestProcess
   # Specify a root directory where the generated Swagger files will be saved.
   config.swagger_root = Rails.root.to_s + '/public'
 
@@ -33,6 +34,7 @@ RSpec.configure do |config|
         },
         task: {
           type: 'object',
+          in: 'formData',
           properties: {
             data: {
               type: 'object',
@@ -44,6 +46,24 @@ RSpec.configure do |config|
                     deadline: { type: 'string' },
                     priority: { type: 'string' },
                     done: { type: 'boolean' }
+                  }
+                }
+              }
+            }
+          }
+        },
+        comment: {
+          type: 'object',
+          in: 'formData',
+          properties: {
+            data: {
+              type: 'object',
+              properties: {
+                attributes: {
+                  type: 'object',
+                  properties: {
+                    name: { type: 'string' },
+                    attachment: { type: 'file' }
                   }
                 }
               }

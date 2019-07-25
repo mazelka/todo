@@ -1,4 +1,5 @@
 require 'swagger_helper'
+include JsonResponseHelpers
 
 RSpec.describe 'projects', type: :request, capture_examples: true do
   let!(:user) { create :user }

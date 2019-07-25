@@ -37,8 +37,4 @@ class Api::V1::CommentsController < Api::V1::ApplicationController
   def comment_params
     params.require(:data).require(:attributes).permit(:text, :attachment)
   end
-
-  def attachment_params
-    params.require(:data).require(:attributes).permit(:attachment)
-  end
 end
