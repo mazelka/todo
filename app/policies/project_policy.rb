@@ -6,6 +6,14 @@ class ProjectPolicy < ApplicationPolicy
     @project = project
   end
 
+  def index?
+    project.user_id == user.id
+  end
+
+  def create?
+    project.user_id == user.id
+  end
+
   def update?
     project.user_id == user.id
   end

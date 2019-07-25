@@ -35,6 +35,7 @@ gem 'dotenv-rails'
 gem 'rspec-rails-swagger'
 gem "pundit"
 gem 'fast_jsonapi'
+gem 'acts_as_list'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'

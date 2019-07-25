@@ -71,7 +71,7 @@ RSpec.describe 'users', type: :request, capture_examples: true do
         let(:'Authorization') { "Bearer #{token}" }
         let(:id) { new_user.id }
         it 'has error title' do
-          expect(json_errors.first['title']).to eq('Unauthorized')
+          expect(json_errors.first['title']).to eq('Forbidden')
         end
       end
     end

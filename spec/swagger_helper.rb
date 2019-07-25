@@ -12,7 +12,7 @@ RSpec.configure do |config|
       info: {
         title: 'Todo',
         version: 'v1',
-        description: 'This is the first version API',
+        description: 'This is the first version API'
       },
       definitions: {
         project: {
@@ -24,12 +24,31 @@ RSpec.configure do |config|
                 attributes: {
                   type: 'object',
                   properties: {
+                    name: { type: 'string' }
+                  }
+                }
+              }
+            }
+          }
+        },
+        task: {
+          type: 'object',
+          properties: {
+            data: {
+              type: 'object',
+              properties: {
+                attributes: {
+                  type: 'object',
+                  properties: {
                     name: { type: 'string' },
-                  },
-                },
-              },
-            },
-          },
+                    deadline: { type: 'string' },
+                    priority: { type: 'string' },
+                    done: { type: 'boolean' }
+                  }
+                }
+              }
+            }
+          }
         },
         user: {
           type: 'object',
@@ -42,14 +61,14 @@ RSpec.configure do |config|
                   properties: {
                     email: { type: 'string' },
                     username: { type: 'string' },
-                    password: { type: 'string' },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-    },
+                    password: { type: 'string' }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 end
