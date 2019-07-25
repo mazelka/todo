@@ -22,6 +22,14 @@ class TaskPolicy < ApplicationPolicy
     task.project.user == user
   end
 
+  def move_lower?
+    task.project.user == user
+  end
+
+  def move_higher?
+    task.project.user == user
+  end
+
   def destroy?
     task.project.user == user
   end
