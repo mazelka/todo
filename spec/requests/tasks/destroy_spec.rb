@@ -21,6 +21,11 @@ RSpec.describe 'tasks', type: :request, capture_examples: true do
         response(204, description: 'successful') do
           let(:Authorization) { "Bearer #{token}" }
           let(:id) { task.id }
+          around do |example|
+            task
+            other_task
+            expect { example.run }.to change(Task, :count).from(2).to(1)
+          end
         end
         response(403, description: 'Forbidden') do
           let(:Authorization) { "Bearer #{token}" }

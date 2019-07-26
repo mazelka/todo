@@ -3,7 +3,8 @@ include JsonResponseHelpers
 
 RSpec.describe 'users', type: :request, capture_examples: true do
   let(:user) { create :user }
-  let(:new_user) { create :user }
+  let(:not_allowed_user) { create :user }
+  let(:new_user) { build :user }
 
   def token
     Knock::AuthToken.new(payload: { sub: user.id }).token
@@ -20,18 +21,21 @@ RSpec.describe 'users', type: :request, capture_examples: true do
         let(:body) do
           { data: {
             attributes: {
-              email: user.email,
-              password: user.password,
-              username: user.username
+              email: new_user.email,
+              password: new_user.password,
+              username: new_user.username
             }
           } }
+        end
+        around do |example|
+          expect { example.run }.to change(User, :count).from(0).to(1)
         end
         it 'has valid response schema' do
           expect(response).to match_response_schema('user')
         end
         it 'has valid attributes' do
-          expect(json_attributes['email']).to eq(user.email)
-          expect(json_attributes['username']).to eq(user.username)
+          expect(json_attributes['email']).to eq(new_user.email)
+          expect(json_attributes['username']).to eq(new_user.username)
         end
       end
       response(422, description: 'unprocessable entity') do
@@ -40,8 +44,8 @@ RSpec.describe 'users', type: :request, capture_examples: true do
           { data: {
             attributes: {
               email: '',
-              password: user.password,
-              username: user.username
+              password: new_user.password,
+              username: new_user.username
             }
           } }
         end
@@ -58,6 +62,10 @@ RSpec.describe 'users', type: :request, capture_examples: true do
       response(204, description: 'successful') do
         let(:'Authorization') { "Bearer #{token}" }
         let(:id) { user.id }
+        around do |example|
+          user
+          expect { example.run }.to change(User, :count).from(1).to(0)
+        end
       end
 
       response(401, description: 'unauthorized') do
@@ -69,7 +77,7 @@ RSpec.describe 'users', type: :request, capture_examples: true do
 
       response(403, description: 'forbidden') do
         let(:'Authorization') { "Bearer #{token}" }
-        let(:id) { new_user.id }
+        let(:id) { not_allowed_user.id }
         it 'has error title' do
           expect(json_errors.first['title']).to eq('Forbidden')
         end

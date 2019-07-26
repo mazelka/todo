@@ -22,6 +22,11 @@ RSpec.describe 'projects', type: :request, capture_examples: true do
         response(204, description: 'successful') do
           let(:Authorization) { "Bearer #{token}" }
           let(:id) { project.id }
+          around do |example|
+            project
+            not_allowed_project
+            expect { example.run }.to change(Project, :count).from(2).to(1)
+          end
         end
         response(404, description: 'not found') do
           let(:Authorization) { "Bearer #{token}" }

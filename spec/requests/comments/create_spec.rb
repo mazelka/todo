@@ -33,8 +33,7 @@ RSpec.describe 'comments', type: :request, capture_examples: true do
           } }
         end
         around do |example|
-          expect { example.run }.to change(Comment, :count).by(1)
-          expect { example.run }.to change(ActiveStorage::Attachment, :count).by(1)
+          expect { example.run }.to change(Comment, :count).by(1).and change(ActiveStorage::Attachment, :count).by(1)
         end
         it 'has valid response schema' do
           expect(response).to match_response_schema('comment')

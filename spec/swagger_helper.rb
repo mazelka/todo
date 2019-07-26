@@ -24,6 +24,7 @@ RSpec.configure do |config|
               properties: {
                 attributes: {
                   type: 'object',
+                  required: %i[name],
                   properties: {
                     name: { type: 'string' }
                   }
@@ -41,6 +42,7 @@ RSpec.configure do |config|
               properties: {
                 attributes: {
                   type: 'object',
+                  required: %i[name],
                   properties: {
                     name: { type: 'string' },
                     deadline: { type: 'string' },
@@ -53,6 +55,7 @@ RSpec.configure do |config|
           }
         },
         comment: {
+          consumes: ['multipart/form-data'],
           type: 'object',
           in: 'formData',
           properties: {
@@ -61,9 +64,10 @@ RSpec.configure do |config|
               properties: {
                 attributes: {
                   type: 'object',
+                  required: %i[name],
                   properties: {
                     name: { type: 'string' },
-                    attachment: { type: 'file' }
+                    attachment: { type: 'string' }
                   }
                 }
               }
@@ -78,6 +82,7 @@ RSpec.configure do |config|
               properties: {
                 attributes: {
                   type: 'object',
+                  required: %i[email username password],
                   properties: {
                     email: { type: 'string' },
                     username: { type: 'string' },
