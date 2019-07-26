@@ -8,6 +8,7 @@ Rails.application.routes.draw do
             put 'move_lower'
             put 'move_higher'
           end
+          resources :comments, only: [:create, :destroy, :index]
         end
       end
       post 'user_token' => 'user_token#create'

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :task do
-    name { FFaker::Product.brand }
+    name { FFaker::Product.brand + FFaker::Product.brand }
     deadline { Time.now }
     position { nil }
     done { false }

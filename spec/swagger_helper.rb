@@ -2,6 +2,7 @@ require 'rspec/rails/swagger'
 require 'rails_helper'
 
 RSpec.configure do |config|
+  include ActionDispatch::TestProcess
   # Specify a root directory where the generated Swagger files will be saved.
   config.swagger_root = Rails.root.to_s + '/public'
 
@@ -23,6 +24,7 @@ RSpec.configure do |config|
               properties: {
                 attributes: {
                   type: 'object',
+                  required: %i[name],
                   properties: {
                     name: { type: 'string' }
                   }
@@ -33,17 +35,39 @@ RSpec.configure do |config|
         },
         task: {
           type: 'object',
+          in: 'formData',
           properties: {
             data: {
               type: 'object',
               properties: {
                 attributes: {
                   type: 'object',
+                  required: %i[name],
                   properties: {
                     name: { type: 'string' },
                     deadline: { type: 'string' },
                     priority: { type: 'string' },
                     done: { type: 'boolean' }
+                  }
+                }
+              }
+            }
+          }
+        },
+        comment: {
+          consumes: ['multipart/form-data'],
+          type: 'object',
+          in: 'formData',
+          properties: {
+            data: {
+              type: 'object',
+              properties: {
+                attributes: {
+                  type: 'object',
+                  required: %i[name],
+                  properties: {
+                    name: { type: 'string' },
+                    attachment: { type: 'string' }
                   }
                 }
               }
@@ -58,6 +82,7 @@ RSpec.configure do |config|
               properties: {
                 attributes: {
                   type: 'object',
+                  required: %i[email username password],
                   properties: {
                     email: { type: 'string' },
                     username: { type: 'string' },
