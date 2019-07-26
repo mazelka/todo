@@ -1,0 +1,1818 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Todo",
+    "version": "v1",
+    "description": "This is the first version API"
+  },
+  "definitions": {
+    "project": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "attributes": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "in": "formData",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "attributes": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "deadline": {
+                  "type": "string"
+                },
+                "priority": {
+                  "type": "string"
+                },
+                "done": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "comment": {
+      "consumes": [
+        "multipart/form-data"
+      ],
+      "type": "object",
+      "in": "formData",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "attributes": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "attachment": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "properties": {
+            "attributes": {
+              "type": "object",
+              "required": [
+                "email",
+                "username",
+                "password"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/v1/tasks/{task_id}/comments": {
+      "post": {
+        "responses": {
+          "201": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "4",
+                  "type": "comment",
+                  "attributes": {
+                    "text": "Clare WalterArnette Johnson",
+                    "attachment_url": null
+                  },
+                  "relationships": {
+                    "task": {
+                      "data": {
+                        "id": "7",
+                        "type": "task"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "description": "successful without attachment"
+          },
+          "422": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/attachment"
+                    },
+                    "detail": "has an invalid content type"
+                  }
+                ]
+              }
+            },
+            "description": "unprocessable entity"
+          },
+          "403": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Forbidden",
+                    "status": 403,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You are not authorized."
+                  }
+                ]
+              }
+            },
+            "description": "Forbidden"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "type": "formData",
+            "schema": {
+              "$ref": "#/definitions/comment"
+            }
+          }
+        ],
+        "tags": [
+          "comments"
+        ],
+        "summary": "create new comment"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": [
+                  {
+                    "id": "21",
+                    "type": "comment",
+                    "attributes": {
+                      "text": "Willodean LittelBrigida Stokes",
+                      "attachment_url": "http://localhost:3000/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBGZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--b255b93b7b4b60491eb789d466b82a947a5f2eb6/photo.jpg"
+                    },
+                    "relationships": {
+                      "task": {
+                        "data": {
+                          "id": "37",
+                          "type": "task"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "id": "22",
+                    "type": "comment",
+                    "attributes": {
+                      "text": "Coleen KuhnCarlena Sporer",
+                      "attachment_url": "http://localhost:3000/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBGdz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--8db1d519a706674bac2f39daaf6c135e5e458b9a/photo.jpg"
+                    },
+                    "relationships": {
+                      "task": {
+                        "data": {
+                          "id": "37",
+                          "type": "task"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "description": "successful"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          },
+          "403": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Forbidden",
+                    "status": 403,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You are not authorized."
+                  }
+                ]
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "forbidden"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "task_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "comments"
+        ],
+        "summary": "get comments for task"
+      }
+    },
+    "/api/v1/comments/{id}": {
+      "delete": {
+        "responses": {
+          "204": {
+            "examples": {
+              "": ""
+            },
+            "description": "successful"
+          },
+          "403": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Forbidden",
+                    "status": 403,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You are not authorized."
+                  }
+                ]
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "not found"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "comments"
+        ],
+        "summary": "destroy comment"
+      }
+    },
+    "/api/v1/projects/": {
+      "post": {
+        "responses": {
+          "201": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "53",
+                  "type": "project",
+                  "attributes": {
+                    "name": "Pagac-Mann"
+                  },
+                  "relationships": {
+                    "user": {
+                      "data": {
+                        "id": "53",
+                        "type": "user"
+                      }
+                    },
+                    "tasks": {
+                      "data": [
+
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "description": "successful"
+          },
+          "422": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/name"
+                    },
+                    "detail": "can't be blank"
+                  },
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/name"
+                    },
+                    "detail": "is too short (minimum is 1 character)"
+                  }
+                ]
+              }
+            },
+            "description": "unprocessable entity"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/project"
+            }
+          }
+        ],
+        "tags": [
+          "projects"
+        ],
+        "summary": "create new project"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": [
+                  {
+                    "id": "67",
+                    "type": "project",
+                    "attributes": {
+                      "name": "Metz Inc"
+                    },
+                    "relationships": {
+                      "user": {
+                        "data": {
+                          "id": "69",
+                          "type": "user"
+                        }
+                      },
+                      "tasks": {
+                        "data": [
+
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "id": "68",
+                    "type": "project",
+                    "attributes": {
+                      "name": "Stanton, Kshlerin and Schroeder"
+                    },
+                    "relationships": {
+                      "user": {
+                        "data": {
+                          "id": "69",
+                          "type": "user"
+                        }
+                      },
+                      "tasks": {
+                        "data": [
+
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "description": "successful"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "projects"
+        ],
+        "summary": "get user projects"
+      }
+    },
+    "/api/v1/projects/{id}": {
+      "delete": {
+        "responses": {
+          "204": {
+            "examples": {
+              "": ""
+            },
+            "description": "successful"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "not found"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "projects"
+        ],
+        "summary": "destroy project"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "78",
+                  "type": "project",
+                  "attributes": {
+                    "name": "Runolfsdottir-Hane"
+                  },
+                  "relationships": {
+                    "user": {
+                      "data": {
+                        "id": "77",
+                        "type": "user"
+                      }
+                    },
+                    "tasks": {
+                      "data": [
+
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "description": "successful"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "not found"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "projects"
+        ],
+        "summary": "show user project"
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "92",
+                  "type": "project",
+                  "attributes": {
+                    "name": "updated name"
+                  },
+                  "relationships": {
+                    "user": {
+                      "data": {
+                        "id": "91",
+                        "type": "user"
+                      }
+                    },
+                    "tasks": {
+                      "data": [
+
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "description": "successful"
+          },
+          "422": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/name"
+                    },
+                    "detail": "can't be blank"
+                  },
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/name"
+                    },
+                    "detail": "is too short (minimum is 1 character)"
+                  }
+                ]
+              }
+            },
+            "description": "unprocessable entity"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "not found"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/project"
+            }
+          }
+        ],
+        "tags": [
+          "projects"
+        ],
+        "summary": "update project"
+      }
+    },
+    "/api/v1/projects/{project_id}/tasks": {
+      "post": {
+        "responses": {
+          "201": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "53",
+                  "type": "task",
+                  "attributes": {
+                    "name": "PyrefuncPhens",
+                    "deadline": "2019-07-26",
+                    "position": 1,
+                    "done": false
+                  },
+                  "relationships": {
+                    "project": {
+                      "data": {
+                        "id": "106",
+                        "type": "project"
+                      }
+                    },
+                    "comments": {
+                      "data": [
+
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "description": "successful"
+          },
+          "422": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/name"
+                    },
+                    "detail": "can't be blank"
+                  },
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/name"
+                    },
+                    "detail": "is too short (minimum is 1 character)"
+                  }
+                ]
+              }
+            },
+            "description": "unprocessable entity"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "project_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "create new task"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": [
+                  {
+                    "id": "70",
+                    "type": "task",
+                    "attributes": {
+                      "name": "BrockwoodPust",
+                      "deadline": "2019-07-26",
+                      "position": 1,
+                      "done": false
+                    },
+                    "relationships": {
+                      "project": {
+                        "data": {
+                          "id": "126",
+                          "type": "project"
+                        }
+                      },
+                      "comments": {
+                        "data": [
+
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "id": "71",
+                    "type": "task",
+                    "attributes": {
+                      "name": "AquanixFinfunc",
+                      "deadline": "2019-07-26",
+                      "position": 2,
+                      "done": false
+                    },
+                    "relationships": {
+                      "project": {
+                        "data": {
+                          "id": "126",
+                          "type": "project"
+                        }
+                      },
+                      "comments": {
+                        "data": [
+
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "description": "successful"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "forbidden"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "project_id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "get project tasks"
+      }
+    },
+    "/api/v1/tasks/{id}": {
+      "delete": {
+        "responses": {
+          "204": {
+            "examples": {
+              "": ""
+            },
+            "description": "successful"
+          },
+          "403": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Forbidden",
+                    "status": 403,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You are not authorized."
+                  }
+                ]
+              }
+            },
+            "description": "Forbidden"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "not found"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "destroy task"
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "136",
+                  "type": "task",
+                  "attributes": {
+                    "name": "BrurewoodPhins",
+                    "deadline": "2019-07-26",
+                    "position": 1,
+                    "done": false
+                  },
+                  "relationships": {
+                    "project": {
+                      "data": {
+                        "id": "174",
+                        "type": "project"
+                      }
+                    },
+                    "comments": {
+                      "data": [
+
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "description": "successful"
+          },
+          "403": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Forbidden",
+                    "status": 403,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You are not authorized."
+                  }
+                ]
+              }
+            },
+            "description": "forbidden"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "not found"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "show user project"
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "154",
+                  "type": "task",
+                  "attributes": {
+                    "name": "BrickPaph",
+                    "deadline": "2020-10-10",
+                    "position": 1,
+                    "done": true
+                  },
+                  "relationships": {
+                    "project": {
+                      "data": {
+                        "id": "192",
+                        "type": "project"
+                      }
+                    },
+                    "comments": {
+                      "data": [
+
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "description": "successful"
+          },
+          "422": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/name"
+                    },
+                    "detail": "can't be blank"
+                  },
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/name"
+                    },
+                    "detail": "is too short (minimum is 1 character)"
+                  }
+                ]
+              }
+            },
+            "description": "unprocessable entity"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "not found"
+          },
+          "403": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Forbidden",
+                    "status": 403,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You are not authorized."
+                  }
+                ]
+              }
+            },
+            "description": "forbidden"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "update task"
+      }
+    },
+    "/api/v1/tasks/{id}/move_higher": {
+      "put": {
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "86",
+                  "type": "task",
+                  "attributes": {
+                    "name": "SircellCygnix",
+                    "deadline": "2019-07-26",
+                    "position": 1,
+                    "done": false
+                  },
+                  "relationships": {
+                    "project": {
+                      "data": {
+                        "id": "140",
+                        "type": "project"
+                      }
+                    },
+                    "comments": {
+                      "data": [
+
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "description": "successful"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "not found"
+          },
+          "403": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Forbidden",
+                    "status": 403,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You are not authorized."
+                  }
+                ]
+              }
+            },
+            "description": "forbidden"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "increment task position"
+      }
+    },
+    "/api/v1/tasks/{id}/move_lower": {
+      "put": {
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "113",
+                  "type": "task",
+                  "attributes": {
+                    "name": "TrieffeforgeTrere",
+                    "deadline": "2019-07-26",
+                    "position": 2,
+                    "done": false
+                  },
+                  "relationships": {
+                    "project": {
+                      "data": {
+                        "id": "158",
+                        "type": "project"
+                      }
+                    },
+                    "comments": {
+                      "data": [
+
+                      ]
+                    }
+                  }
+                }
+              }
+            },
+            "description": "successful"
+          },
+          "404": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Record not Found",
+                    "status": 404,
+                    "source": {
+                      "pointer": "/request/url/:id"
+                    },
+                    "detail": "We could not find the object you were looking for."
+                  }
+                ]
+              }
+            },
+            "description": "not found"
+          },
+          "403": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Forbidden",
+                    "status": 403,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You are not authorized."
+                  }
+                ]
+              }
+            },
+            "description": "forbidden"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "tags": [
+          "tasks"
+        ],
+        "summary": "decrement task position"
+      }
+    },
+    "/api/v1/user_token": {
+      "post": {
+        "responses": {
+          "201": {
+            "examples": {
+              "application/json": {
+                "jwt": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1NjQyMjQ0NzMsInN1YiI6MjA4fQ.8Qyau6bRKJ_4ktCornvTRCL-jRenLbh481ehwBnBKcg"
+              }
+            },
+            "description": "successful login with username"
+          },
+          "404": {
+            "examples": {
+              "text/html": ""
+            },
+            "description": "user not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "tags": [
+          "authorize"
+        ],
+        "summary": "login with email or username"
+      }
+    },
+    "/api/v1/users": {
+      "post": {
+        "responses": {
+          "201": {
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "212",
+                  "type": "user",
+                  "attributes": {
+                    "email": "catharine@hintz.biz",
+                    "username": "reiko.wintheisererik"
+                  }
+                }
+              }
+            },
+            "description": "successful"
+          },
+          "422": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/email"
+                    },
+                    "detail": "can't be blank"
+                  },
+                  {
+                    "source": {
+                      "pointer": "/data/attributes/email"
+                    },
+                    "detail": "is invalid"
+                  }
+                ]
+              }
+            },
+            "description": "unprocessable entity"
+          }
+        },
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/user"
+            }
+          }
+        ],
+        "tags": [
+          "users"
+        ],
+        "summary": "create user"
+      }
+    },
+    "/api/v1/users/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "Authorization",
+          "in": "header",
+          "type": "string"
+        }
+      ],
+      "delete": {
+        "responses": {
+          "204": {
+            "examples": {
+              "": ""
+            },
+            "description": "successful"
+          },
+          "401": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Token is invalid",
+                    "status": 401,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You must provide valid email and password in order to exchange it for token."
+                  }
+                ]
+              }
+            },
+            "description": "unauthorized"
+          },
+          "403": {
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "title": "Forbidden",
+                    "status": 403,
+                    "source": {
+                      "pointer": "/headers/authorization"
+                    },
+                    "detail": "You are not authorized."
+                  }
+                ]
+              }
+            },
+            "description": "forbidden"
+          }
+        },
+        "tags": [
+          "users"
+        ],
+        "summary": "delete user"
+      }
+    }
+  }
+}

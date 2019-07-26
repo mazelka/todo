@@ -15,7 +15,13 @@
 
 # Ignore uploaded files in development
 /storage/*
+/public/uploads
 !/storage/.keep
+.simplecov
+/coverage/*
+.rufo
+.vscode/*
+/public/apidocs/
 
 .byebug_history
 

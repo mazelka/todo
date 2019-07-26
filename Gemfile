@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.4.1'
+ruby '2.4.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
@@ -14,7 +14,7 @@ gem 'puma', '~> 3.11'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
@@ -24,11 +24,32 @@ gem 'puma', '~> 3.11'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'active_model_serializers' #json_api
+gem 'jwt'
+gem 'knock'
+gem 'rack-cors'
+gem 'carrierwave', '~> 1.0'
+gem 'carrierwave-dropbox', :git => 'https://github.com/robin850/carrierwave-dropbox.git', :tag => 'v2.0.0.rc1'
+gem 'rmagick'
+gem 'dotenv-rails'
+gem 'rspec-rails-swagger'
+gem "pundit"
+gem 'fast_jsonapi'
+gem 'acts_as_list'
+gem 'active_storage_validations'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
 group :development, :test do
+  gem 'ffaker'
+  gem 'pry'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers'
+  gem 'json_matchers'
+  gem 'simplecov', require: false
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end

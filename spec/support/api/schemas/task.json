@@ -1,0 +1,37 @@
+{
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string" },
+            "deadline": { "type": "string" },
+            "priority": { "type": "string" },
+            "done": { "type": "boolean" }
+          }
+        },
+        "relationships": {
+          "type": "object",
+          "properties": {
+            "project": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": { "type": "string" },
+                    "type": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
