@@ -8,7 +8,7 @@ RSpec.configure do |config|
 
   # Define one or more Swagger documents and global metadata for each.
   config.swagger_docs = {
-    'swagger/v1/swagger.json' => {
+    'docs/swagger/v1/swagger.json' => {
       swagger: '2.0',
       info: {
         title: 'Todo',
