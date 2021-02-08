@@ -28,7 +28,7 @@ gem 'active_model_serializers' #json_api
 gem 'jwt'
 gem 'knock'
 gem 'rack-cors'
-gem 'carrierwave', '~> 1.0'
+gem 'carrierwave', '~> 1.3'
 gem 'carrierwave-dropbox', :git => 'https://github.com/robin850/carrierwave-dropbox.git', :tag => 'v2.0.0.rc1'
 gem 'rmagick'
 gem 'dotenv-rails'
